@@ -4,27 +4,34 @@ import os
 
 def get_elevation_lists(file_name):
     """
-    given a file with elevation data, read each line and return a list for each line.
+    given a file with elevation data, read each line and return a new number for the percentage of color for each line.
     """
     elevation_list = []
     with open(file_name) as file:
         for item in file:
             elevation_list = [int((int(item)-3139)/(5648-3139) * 255) for item in file.read().split()]
+            elevation_list = zip(elevation_list, elevation_list, elevation_list)
 
     return elevation_list
 
 
 
 def get_map_image(mapIm):
+    """
+    takes the range of the picture and creates all possible points
+    """
     elevation_list_junior = []
-    for left in range(0, width):
-        for top in range(0, height):
+    for top in range(0, height):
+        for left in range(0, width):
             elevation_list_junior.append((left, top))
             # print(left, top)
         
     return elevation_list_junior
 
 def get_dictionary(elevation_list_junior, elevation_list):
+    """
+    creates a dictonairy with all of the points and associated color percentage
+    """
     elevation_dictionary = dict(zip(elevation_list_junior, elevation_list))
     return elevation_dictionary
 
@@ -42,16 +49,12 @@ if __name__ == "__main__":
 
     width, height = mapIm.size
 
-    # print(get_elevation_lists(file_name))
-
-
-
-    # max_elevation = max([max(row) for row in get_elevation_lists(file_name)])
-    # min_elevation = min([min(row) for row in get_elevation_lists(file_name)])
+    # # print(get_elevation_lists(file_name))
     # print(get_map_image(mapIm))
-    # print(min_elevation, max_elevation)
-    print(get_dictionary(get_map_image(mapIm), get_elevation_lists(file_name)))
+    # print(get_dictionary(get_map_image(mapIm), get_elevation_lists(file_name)))
 
+    for key, value in get_dictionary(get_map_image(mapIm), get_elevation_lists(file_name)).items():
+        mapIm.putpixel(key, value)
 
     mapIm.save('map.png')
 
