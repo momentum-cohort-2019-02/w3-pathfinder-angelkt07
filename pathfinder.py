@@ -45,7 +45,7 @@ class MapImage:
 
 if __name__ == "__main__":
     file_name = 'elevation_small.txt'
-    mapIm = Image.new('RGBA', (600, 600), 'white')
+    mapIm = Image.new('RGBA', (600, 600))
 
     width, height = mapIm.size
 

@@ -4,7 +4,8 @@ from PIL import Image
 
 def test_get_elevation_lists():
     run_file = get_elevation_lists('elevation_small.txt')
-    assert type(run_file) == list
+    assert type(run_file) == zip
+
 
 
 
